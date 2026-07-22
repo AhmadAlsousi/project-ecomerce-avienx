@@ -22,9 +22,17 @@ RUN composer install \
     --no-dev \
     --no-interaction \
     --prefer-dist \
-    --optimize-autoloader
+    --optimize-autoloader \
+    --no-scripts \
+    -vvv
 
-RUN chown -R www-data:www-data storage bootstrap/cache \
+RUN mkdir -p \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
